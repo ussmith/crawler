@@ -18,13 +18,8 @@ const (
 )
 
 func Find(start, pattern string, matchType MatchType) []string {
-	var result []string
 
-	followDir(start, pattern, result, matchType)
-
-	//for _, i := range result {
-	//log.Infof("Found %s", i)
-	//}
+	result := followDir(start, pattern, matchType)
 
 	log.Infof("Found %d results", len(result))
 	return result
@@ -34,9 +29,10 @@ func addIfMatches(file fs.FileInfo, pattern string, result *[]string) {
 	log.Info(file.Name())
 }
 
-func followDir(start, pattern string, results []string, matchType MatchType) {
+func followDir(start, pattern string, matchType MatchType) []string {
 	log.Infof("Following the dir %s", start)
 
+	var results []string
 	filepath.Walk(start,
 		func(path string, info os.FileInfo, err error) error {
 			var match bool
@@ -60,26 +56,6 @@ func followDir(start, pattern string, results []string, matchType MatchType) {
 		},
 	)
 
-	for _, i := range results {
-		log.Infof("Found %s", i)
-	}
-	// for _, f := range dir {
-	// 	if f.IsDir() {
-	// 		if root == "" {
-	// 			log.Info("Emtpy root")
-	// 			root = start + "/" + f.Name()
-	// 		} else {
-	// 			log.Infof("root base: %s", root)
-	// 			root = root + "/" + f.Name()
-	// 			log.Infof("root : %s", root)
-	// 		}
-
-	// 		log.Infof("Following: %s", root)
-	// 		go followDir(root, pattern, results)
-	// 	} else {
-	// 		log.Infof("Adding if matches %s", f.Name())
-	// 		addIfMatches(f, pattern, results)
-	// 	}
-	// }
-
+	log.Infof("Returning %d results", len(results))
+	return results
 }

@@ -22,9 +22,11 @@ func Find(start, pattern string, matchType MatchType) []string {
 
 	followDir(start, pattern, result, matchType)
 
-	for _, i := range result {
-		log.Infof("Found %s", i)
-	}
+	//for _, i := range result {
+	//log.Infof("Found %s", i)
+	//}
+
+	log.Infof("Found %d results", len(result))
 	return result
 }
 

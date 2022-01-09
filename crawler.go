@@ -18,10 +18,7 @@ const (
 )
 
 func Find(start, pattern string, matchType MatchType) []string {
-
 	result := followDir(start, pattern, matchType)
-
-	log.Infof("Found %d results", len(result))
 	return result
 }
 
@@ -30,7 +27,6 @@ func addIfMatches(file fs.FileInfo, pattern string, result *[]string) {
 }
 
 func followDir(start, pattern string, matchType MatchType) []string {
-	log.Infof("Following the dir %s", start)
 
 	var results []string
 	filepath.Walk(start,
@@ -49,13 +45,11 @@ func followDir(start, pattern string, matchType MatchType) []string {
 			}
 
 			if match {
-				log.Info("####################  MATCH ###############")
 				results = append(results, path)
 			}
 			return nil
 		},
 	)
 
-	log.Infof("Returning %d results", len(results))
 	return results
 }
